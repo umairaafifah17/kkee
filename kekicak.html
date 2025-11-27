@@ -1,0 +1,2983 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeKiCak - Kepedulian Kijang Cakap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        html, body {
+            min-height: 100%;
+            height: auto;
+        }
+        body {
+            box-sizing: border-box;
+            /* Ensure no white gaps if image crops; keep safe fallback color */
+            background-color: #000;
+            /* Persistent overlay across full page height via layered backgrounds */
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.20), rgba(0,0,0,0.20)),
+                url('https://lh3.googleusercontent.com/d/1_g2SmAZdqb-F1uAonKASMc6GFwtO1RjJ') !important;
+        }
+        
+        /* Responsive Design Variables */
+        :root {
+            --mobile-padding: 1rem;
+            --tablet-padding: 1.5rem;
+            --desktop-padding: 2rem;
+            --mobile-text-base: 0.875rem;
+            --tablet-text-base: 1rem;
+            --desktop-text-base: 1.125rem;
+        }
+        
+        /* Base responsive styles */
+        .responsive-container {
+            width: 100%;
+            max-width: 100vw;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        /* Mobile styles (up to 640px) */
+        @media (max-width: 640px) {
+            .mobile-optimized {
+                padding: var(--mobile-padding);
+                font-size: var(--mobile-text-base);
+            }
+            
+            .mobile-stack {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .mobile-full-width {
+                width: 100%;
+                max-width: none;
+            }
+            
+            .mobile-text-center {
+                text-align: center;
+            }
+            
+            .mobile-smaller-image {
+                width: 150px !important;
+                height: auto;
+            }
+            
+            .mobile-compact-bubble {
+                padding: 1rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .mobile-smaller-title {
+                font-size: 2.5rem !important;
+                line-height: 1.2;
+            }
+            
+            .mobile-compact-grid {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            .responsive-container {
+                padding: 0.75rem;
+                max-width: 100%;
+            }
+        }
+        
+        /* Tablet styles (641px to 1023px) */
+        @media (min-width: 641px) and (max-width: 1023px) {
+            .tablet-optimized {
+                padding: var(--tablet-padding);
+                font-size: var(--tablet-text-base);
+            }
+            
+            .tablet-image {
+                width: 200px;
+                height: auto;
+            }
+            
+            .tablet-bubble {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .tablet-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .responsive-container {
+                padding: 1.5rem;
+                max-width: 90%;
+            }
+        }
+        
+        /* Desktop styles (1024px and up) */
+        @media (min-width: 1024px) {
+            .desktop-enhanced {
+                padding: var(--desktop-padding);
+                font-size: var(--desktop-text-base);
+            }
+            
+            .desktop-larger-image {
+                width: 280px;
+                height: auto;
+            }
+            
+            .desktop-wider-content {
+                max-width: 1200px;
+            }
+            
+            .desktop-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            
+            .desktop-bubble {
+                padding: 2rem;
+                margin-bottom: 2rem;
+            }
+            
+            .responsive-container {
+                padding: 2rem;
+                max-width: 85%;
+            }
+        }
+        
+        /* Large desktop styles (1440px and up) */
+        @media (min-width: 1440px) {
+            .xl-desktop-enhanced {
+                padding: 3rem;
+                font-size: 1.25rem;
+            }
+            
+            .xl-desktop-image {
+                width: 320px;
+                height: auto;
+            }
+            
+            .xl-desktop-content {
+                max-width: 1400px;
+            }
+            
+            .responsive-container {
+                padding: 2.5rem;
+                max-width: 80%;
+            }
+        }
+        
+        /* Ultra-wide desktop styles (1920px and up) */
+        @media (min-width: 1920px) {
+            .xxl-desktop-enhanced {
+                padding: 4rem;
+                font-size: 1.375rem;
+            }
+            
+            .xxl-desktop-image {
+                width: 360px;
+                height: auto;
+            }
+            
+            .xxl-desktop-content {
+                max-width: 1600px;
+            }
+            
+            .responsive-container {
+                padding: 3rem;
+                max-width: 75%;
+            }
+        }
+        
+        .bounce-gentle {
+            animation: bounceGentle 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounceGentle {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+            }
+        }
+        
+
+        
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .sparkle {
+            animation: sparkle 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid #fbbf24;
+        }
+        
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid #fbbf24;
+        }
+        
+        .speech-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 12px solid white;
+        }
+        
+
+        
+        .pulse-button {
+            animation: pulseButton 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseButton {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            }
+        }
+        
+        .page-transition {
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        /* Smooth scroll on iOS for scrollable areas */
+        .overflow-y-auto {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Device preference overrides: treat iPad/tablet as desktop sizing */
+        .prefer-desktop .responsive-container {
+            padding: 2rem;
+            max-width: 85%;
+            font-size: var(--desktop-text-base);
+        }
+        .prefer-desktop .mobile-smaller-image {
+            width: 280px !important;
+            height: auto;
+        }
+        .prefer-desktop .mobile-compact-bubble {
+            padding: 2rem !important;
+            margin-bottom: 2rem !important;
+        }
+        .prefer-desktop .mobile-compact-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 2rem !important;
+        }
+        .prefer-desktop .mobile-smaller-title {
+            font-size: 4rem !important;
+            line-height: 1.1;
+        }
+
+        /* Ensure background always covers and can be cropped (no white gaps) */
+        body {
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            background-attachment: fixed;
+        }
+    </style>
+    <meta name="google" content="notranslate">
+</head>
+<body class="h-full overflow-x-hidden" style="background-image: url('https://lh3.googleusercontent.com/d/1_g2SmAZdqb-F1uAonKASMc6GFwtO1RjJ'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    
+    
+    <!-- Background Elements -->
+    <div class="absolute inset-0">
+        <!-- Floating clouds -->
+        <div class="absolute top-10 left-10 w-20 h-12 bg-white bg-opacity-30 rounded-full float" style="animation-delay: 0s;"></div>
+        <div class="absolute top-20 right-20 w-16 h-8 bg-white bg-opacity-20 rounded-full float" style="animation-delay: 1s;"></div>
+        <div class="absolute top-32 left-1/3 w-24 h-14 bg-white bg-opacity-25 rounded-full float" style="animation-delay: 2s;"></div>
+        
+        <!-- Sparkles -->
+        <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-300 rounded-full sparkle" style="animation-delay: 0.5s;"></div>
+        <div class="absolute top-1/3 right-1/3 w-3 h-3 bg-pink-300 rounded-full sparkle" style="animation-delay: 1.2s;"></div>
+        <div class="absolute bottom-1/4 left-1/5 w-2 h-2 bg-blue-300 rounded-full sparkle" style="animation-delay: 2.1s;"></div>
+        <div class="absolute top-1/2 right-1/4 w-2 h-2 bg-green-300 rounded-full sparkle" style="animation-delay: 0.8s;"></div>
+    </div>
+
+    <!-- Welcome Page -->
+    <div id="welcomePage" class="relative min-h-screen overflow-y-auto flex items-center justify-center py-4 sm:py-6 lg:py-8">
+        <div class="responsive-container text-center desktop-wider-content xl-desktop-content xxl-desktop-content mx-auto">
+            <!-- Logo/Title -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.2s;">
+                <h1 class="text-4xl sm:text-6xl lg:text-8xl mobile-smaller-title font-bold text-white mb-2 sm:mb-4 drop-shadow-lg">
+                    KeKiCak
+                </h1>
+                <p class="text-lg sm:text-xl lg:text-2xl text-white font-medium drop-shadow-md">
+                    Kepedulian Kijang Cakap
+                </p>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.6s;">
+                <div class="relative inline-block">
+                    <!-- Kijak Character Image -->
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-48 sm:w-64 md:tablet-image lg:desktop-larger-image xl:xl-desktop-image 2xl:xxl-desktop-image mobile-smaller-image h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback jika gambar tidak bisa dimuat -->
+                        <div class="w-36 sm:w-48 lg:w-64 h-36 sm:h-48 lg:h-64 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-4xl sm:text-6xl mb-2">🦌</div>
+                                <p class="text-white font-semibold text-xs sm:text-sm">Kijak</p>
+                                <p class="text-white text-xs opacity-80 hidden sm:block">Teman Berceritamu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Welcome Message -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 1s;">
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 lg:desktop-bubble xl:xl-desktop-enhanced 2xl:xxl-desktop-enhanced border-4 border-yellow-400 shadow-xl max-w-xs sm:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto mobile-compact-bubble tablet-bubble">
+                    <h2 class="text-lg sm:text-2xl lg:text-3xl text-gray-800 font-semibold mb-2 sm:mb-4">
+                        Selamat datang di Bumi Tuntung Pandang 🌟
+                    </h2>
+                    <p class="text-sm sm:text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                        Tempat aman untuk bercerita tentang pengalamanmu. 
+                        <br class="hidden sm:block">
+                        <span class="block sm:inline">Setiap Cerita Berharga, Setiap Suara Bermakna!</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Start Button -->
+            <div class="fade-in-up mb-8 sm:mb-0" style="animation-delay: 1.4s;">
+                <button id="startBtn" class="bg-white text-purple-600 font-bold text-lg sm:text-xl px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-glow mobile-full-width sm:w-auto">
+                    🚀 Mulai
+                </button>
+            </div>
+
+            <!-- Features Preview -->
+            <div class="fade-in-up mt-8 sm:mt-12 grid grid-cols-1 sm:tablet-grid lg:desktop-grid gap-4 sm:gap-6 lg:gap-8 mobile-compact-grid" style="animation-delay: 1.8s;">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
+                    <div class="text-2xl sm:text-3xl mb-1 sm:mb-2">💭</div>
+                    <h3 class="font-semibold mb-1 text-sm sm:text-base">Cerita Bebas</h3>
+                    <p class="text-xs sm:text-sm opacity-90">Ceritakan apa saja yang ada di pikiranmu</p>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
+                    <div class="text-2xl sm:text-3xl mb-1 sm:mb-2">🤗</div>
+                    <h3 class="font-semibold mb-1 text-sm sm:text-base">Teman Setia</h3>
+                    <p class="text-xs sm:text-sm opacity-90">Kijak selalu siap mendengarkan dengan sabar</p>
+                </div>
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 text-white">
+                    <div class="text-2xl sm:text-3xl mb-1 sm:mb-2">🌈</div>
+                    <h3 class="font-semibold mb-1 text-sm sm:text-base">Dukungan Positif</h3>
+                    <p class="text-xs sm:text-sm opacity-90">Dapatkan motivasi dan semangat baru</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction Page -->
+    <div id="introPage" class="hidden relative min-h-screen overflow-y-auto flex items-center justify-center py-4 sm:py-6 lg:py-8">
+        <div class="responsive-container text-center desktop-wider-content xl-desktop-content xxl-desktop-content mx-auto">
+            
+            <!-- Speech Bubble -->
+            <div id="speechBubble" class="fade-in-up mb-6 sm:mb-8 max-w-xs sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+                <div class="speech-bubble mobile-compact-bubble tablet-bubble desktop-bubble xl-desktop-enhanced 2xl-xxl-desktop-enhanced">
+                    <p id="dialogText" class="text-base sm:text-lg lg:text-xl text-gray-800 font-medium">
+                        Haii... assalamu'alaikum, teman baru Kijak! 🌿
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.4s;">
+                <div class="relative inline-block">
+                    <!-- Kijak Character Image -->
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-48 sm:w-64 md:tablet-image lg:desktop-larger-image xl:xl-desktop-image 2xl:xxl-desktop-image mobile-smaller-image h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback jika gambar tidak bisa dimuat -->
+                        <div class="w-36 sm:w-48 lg:w-64 h-36 sm:h-48 lg:h-64 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-4xl sm:text-6xl mb-2">🦌</div>
+                                <p class="text-white font-semibold text-xs sm:text-sm">Kijak</p>
+                                <p class="text-white text-xs opacity-80 hidden sm:block">Teman Berceritamu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continue Button -->
+            <div class="fade-in-up" style="animation-delay: 0.8s;">
+                <button id="continueBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-button mobile-full-width sm:w-auto">
+                    Lanjutkan ➤
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Name Input Page -->
+    <div id="nameInputPage" class="hidden relative min-h-screen overflow-y-auto flex items-center justify-center py-4 sm:py-6 lg:py-8">
+        <div class="responsive-container text-center desktop-wider-content xl-desktop-content xxl-desktop-content mx-auto">
+            
+            <!-- Speech Bubble -->
+            <div class="fade-in-up mb-6 sm:mb-8 max-w-xs sm:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+                <div class="speech-bubble mobile-compact-bubble tablet-bubble desktop-bubble xl-desktop-enhanced 2xl-xxl-desktop-enhanced">
+                    <p class="text-base sm:text-lg lg:text-xl text-gray-800 font-medium">
+                        Sebelum kita mulai bercerita, boleh Kijak tahu nama kamu? 😊
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.2s;">
+                <div class="relative inline-block">
+                    <!-- Kijak Character Image -->
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-36 sm:w-48 lg:w-64 mobile-smaller-image h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback jika gambar tidak bisa dimuat -->
+                        <div class="w-32 sm:w-40 lg:w-48 h-32 sm:h-40 lg:h-48 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-3xl sm:text-5xl mb-2">🦌</div>
+                                <p class="text-white font-semibold text-xs sm:text-sm">Kijak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Name Input Form -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.4s;">
+                <form id="nameForm" class="max-w-xs sm:max-w-md mx-auto">
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 lg:desktop-bubble xl:xl-desktop-enhanced 2xl:xxl-desktop-enhanced border-4 border-yellow-400 shadow-xl mobile-compact-bubble tablet-bubble">
+                        <label for="studentName" class="block text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">
+                            Nama Anda:
+                        </label>
+                        <input 
+                            type="text" 
+                            id="studentName" 
+                            name="studentName"
+                            placeholder="Ketik nama kamu di sini..."
+                            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+                            maxlength="50"
+                            required
+                        >
+                        <p class="text-xs sm:text-sm text-gray-600 mt-2">
+                            Nama ini akan digunakan Kijak untuk memanggil kamu 💚
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="fade-in-up mb-6 sm:mb-0" style="animation-delay: 0.6s;">
+                <button id="submitNameBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-button disabled:opacity-50 disabled:cursor-not-allowed mobile-full-width sm:w-auto" disabled>
+                    Lanjutkan Bercerita ➤
+                </button>
+            </div>
+
+            <!-- Tips -->
+            <div class="fade-in-up mt-6 sm:mt-8" style="animation-delay: 0.8s;">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 max-w-xs sm:max-w-md mx-auto">
+                    <p class="text-white text-xs sm:text-sm">
+                        💡 <strong>Tips:</strong> Gunakan nama panggilan atau nama yang kamu suka!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Story Questions Page -->
+    <div id="storyQuestionsPage" class="hidden relative min-h-screen overflow-y-auto flex items-center justify-center py-4 sm:py-6 lg:py-8">
+        <div class="responsive-container text-center desktop-wider-content xl-desktop-content xxl-desktop-content mx-auto">
+            
+            <!-- Progress Indicator -->
+            <div class="fade-in-up mb-4 sm:mb-6">
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <div class="text-white font-semibold text-sm sm:text-base">
+                        Pertanyaan <span id="currentQuestionNumber">1</span> dari <span id="totalQuestions">5</span>
+                    </div>
+                    <div class="w-24 sm:w-32 bg-white bg-opacity-30 rounded-full h-2 sm:ml-4">
+                        <div id="progressBar" class="bg-yellow-400 h-2 rounded-full transition-all duration-500" style="width: 20%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Speech Bubble -->
+            <div id="questionBubble" class="fade-in-up mb-6 sm:mb-8 max-w-xs sm:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto">
+                <div class="speech-bubble mobile-compact-bubble tablet-bubble desktop-bubble xl-desktop-enhanced 2xl-xxl-desktop-enhanced">
+                    <p id="questionText" class="text-base sm:text-lg lg:text-xl text-gray-800 font-medium">
+                        Hai, bagaimana kabarmu hari ini?
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.2s;">
+                <div class="relative inline-block">
+                    <!-- Kijak Character Image -->
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-36 sm:w-48 lg:w-64 mobile-smaller-image h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback jika gambar tidak bisa dimuat -->
+                        <div class="w-32 sm:w-40 lg:w-48 h-32 sm:h-40 lg:h-48 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-3xl sm:text-5xl mb-2">🦌</div>
+                                <p class="text-white font-semibold text-xs sm:text-sm">Kijak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Answer Input Form -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.4s;">
+                <form id="answerForm" class="max-w-xs sm:max-w-2xl mx-auto">
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 lg:desktop-bubble xl:xl-desktop-enhanced 2xl:xxl-desktop-enhanced border-4 border-yellow-400 shadow-xl mobile-compact-bubble tablet-bubble">
+                        <label for="studentAnswer" class="block text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">
+                            Jawaban kamu:
+                        </label>
+                        <textarea 
+                            id="studentAnswer" 
+                            name="studentAnswer"
+                            placeholder="Ceritakan di sini..."
+                            rows="3"
+                            class="w-full px-3 sm:px-4 py-2 sm:py-3 text-base sm:text-lg border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all duration-300 resize-none"
+                            maxlength="500"
+                            required
+                        ></textarea>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-2 space-y-1 sm:space-y-0">
+                            <p class="text-xs sm:text-sm text-gray-600">
+                                Ceritakan dengan bebas, Kijak mendengarkan 💚
+                            </p>
+                            <span id="charCount" class="text-xs sm:text-sm text-gray-500">0/500</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="fade-in-up flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4 mobile-stack" style="animation-delay: 0.6s;">
+                <button id="prevQuestionBtn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold text-base sm:text-lg px-4 sm:px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hidden mobile-full-width sm:w-auto">
+                    ← Sebelumnya
+                </button>
+                <button id="nextQuestionBtn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-button disabled:opacity-50 disabled:cursor-not-allowed mobile-full-width sm:w-auto" disabled>
+                    Lanjutkan ➤
+                </button>
+            </div>
+
+            <!-- Encouragement Message -->
+            <div class="fade-in-up mt-6 sm:mt-8" style="animation-delay: 0.8s;">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 max-w-xs sm:max-w-md mx-auto">
+                    <p class="text-white text-xs sm:text-sm">
+                        💡 <strong>Tips:</strong> Tidak ada jawaban yang salah. Ceritakan apa yang kamu rasakan!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Reflection Sections Page -->
+    <div id="reflectionSectionsPage" class="hidden relative min-h-screen overflow-y-auto py-4 sm:py-6 lg:py-8">
+        <div class="responsive-container text-center desktop-wider-content xl-desktop-content xxl-desktop-content mx-auto">
+            
+            <!-- Header -->
+            <div class="fade-in-up mb-6 sm:mb-8">
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 lg:desktop-bubble xl:xl-desktop-enhanced 2xl:xxl-desktop-enhanced border-4 border-yellow-400 shadow-xl max-w-xs sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto mobile-compact-bubble tablet-bubble">
+                    <h2 class="text-lg sm:text-2xl lg:text-3xl text-gray-800 font-bold mb-2 sm:mb-4">
+                        Mari Lanjutkan Refleksi Bersama Kijak! 🌟
+                    </h2>
+                    <p class="text-sm sm:text-lg text-gray-700 leading-relaxed">
+                        Sekarang saatnya untuk merefleksikan lebih dalam tentang dirimu. Pilih salah satu bagian di bawah ini untuk memulai!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="fade-in-up mb-4 sm:mb-6">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 max-w-xs sm:max-w-2xl mx-auto">
+                    <p class="text-white text-xs sm:text-sm mb-2">
+                        <strong>Progress Refleksi:</strong>
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-1 sm:gap-2 text-xs mobile-compact-grid">
+                        <div id="progressInitial" class="bg-gray-400 text-white px-1 sm:px-2 py-1 rounded text-center">
+                            💭 <span class="hidden sm:inline">Cerita Awal</span><span class="sm:hidden">Awal</span>
+                        </div>
+                        <div id="progressAcademic" class="bg-gray-400 text-white px-1 sm:px-2 py-1 rounded text-center">
+                            📚 <span class="hidden sm:inline">Akademik</span><span class="sm:hidden">Belajar</span>
+                        </div>
+                        <div id="progressSocial" class="bg-gray-400 text-white px-1 sm:px-2 py-1 rounded text-center">
+                            🤝 <span class="hidden sm:inline">Sosial-Emosional</span><span class="sm:hidden">Sosial</span>
+                        </div>
+                        <div id="progressHopes" class="bg-gray-400 text-white px-1 sm:px-2 py-1 rounded text-center">
+                            🌈 <span class="hidden sm:inline">Harapan & Refleksi</span><span class="sm:hidden">Harapan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continue Button (appears after completing all sections) -->
+            <div id="continueToSummaryBtn" class="fade-in-up mb-6 sm:mb-8 hidden">
+                <button onclick="showSummaryPage()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-base sm:text-xl px-6 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-glow mobile-full-width sm:w-auto">
+                    📝 Lihat Ringkasan & Kirim ke Guru Wali
+                </button>
+                <p class="text-white text-xs sm:text-sm mt-2 opacity-80">
+                    🎉 Selamat! Kamu sudah menyelesaikan semua refleksi! Yuk lihat ringkasan jawabanmu.
+                </p>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-6 sm:mb-8" style="animation-delay: 0.2s;">
+                <div class="relative inline-block">
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-32 sm:w-40 lg:w-48 mobile-smaller-image h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-24 sm:w-32 lg:w-40 h-24 sm:h-32 lg:h-40 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-2xl sm:text-4xl mb-1">🦌</div>
+                                <p class="text-white font-semibold text-xs">Kijak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Three Sections -->
+            <div class="fade-in-up grid grid-cols-1 sm:tablet-grid lg:desktop-grid gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 mobile-compact-grid" style="animation-delay: 0.4s;">
+                
+                <!-- Refleksi Akademik -->
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 border-4 border-blue-400 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer" onclick="selectReflectionSection('academic')">
+                    <div class="text-3xl sm:text-5xl mb-2 sm:mb-4">📚</div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Refleksi Akademik</h3>
+                    <p class="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                        Ceritakan tentang pengalaman belajarmu, tantangan yang dihadapi, dan pencapaian yang membuatmu bangga.
+                    </p>
+                    <div class="bg-blue-100 rounded-lg p-2 sm:p-3">
+                        <p class="text-blue-800 text-xs font-semibold">
+                            💡 Fokus: Pembelajaran & Prestasi
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pengembangan Diri (Sosial-Emosional) -->
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 border-4 border-green-400 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer" onclick="selectReflectionSection('social-emotional')">
+                    <div class="text-3xl sm:text-5xl mb-2 sm:mb-4">🤝</div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Pengembangan Diri</h3>
+                    <p class="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                        Bagikan tentang hubungan dengan teman, keluarga, dan bagaimana kamu mengelola emosi serta perasaanmu.
+                    </p>
+                    <div class="bg-green-100 rounded-lg p-2 sm:p-3">
+                        <p class="text-green-800 text-xs font-semibold">
+                            💚 Fokus: Sosial & Emosional
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Harapan dan Refleksi Diri -->
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 sm:p-6 border-4 border-purple-400 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer" onclick="selectReflectionSection('hopes-reflection')">
+                    <div class="text-3xl sm:text-5xl mb-2 sm:mb-4">🌈</div>
+                    <h3 class="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Harapan & Refleksi Diri</h3>
+                    <p class="text-gray-700 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4">
+                        Ceritakan tentang impian, harapan masa depan, dan refleksi mendalam tentang dirimu sendiri.
+                    </p>
+                    <div class="bg-purple-100 rounded-lg p-2 sm:p-3">
+                        <p class="text-purple-800 text-xs font-semibold">
+                            ✨ Fokus: Mimpi & Refleksi
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Instructions -->
+            <div class="fade-in-up" style="animation-delay: 0.6s;">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-3 sm:p-4 max-w-xs sm:max-w-2xl mx-auto">
+                    <p class="text-white text-xs sm:text-sm">
+                        💡 <strong>Petunjuk:</strong> Klik salah satu bagian di atas untuk memulai refleksi yang lebih mendalam bersama Kijak!
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Summary Page -->
+    <div id="summaryPage" class="hidden relative min-h-screen overflow-y-auto p-4">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Header -->
+            <div class="fade-in-up mb-8 text-center">
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-6 border-4 border-yellow-400 shadow-xl">
+                    <h2 class="text-2xl md:text-3xl text-gray-800 font-bold mb-4">
+                        📝 Ringkasan Refleksi Bersama Kijak
+                    </h2>
+                    <p class="text-lg text-gray-700">
+                        Berikut adalah ringkasan semua jawaban refleksimu, <span id="summaryStudentName" class="font-semibold text-blue-600"></span>!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-8 text-center" style="animation-delay: 0.2s;">
+                <div class="relative inline-block">
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-32 h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="w-24 h-24 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-3xl mb-1">🦌</div>
+                                <p class="text-white font-semibold text-xs">Kijak</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Content -->
+            <div id="summaryContent" class="fade-in-up space-y-6 mb-8" style="animation-delay: 0.4s;">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+
+            <!-- Email Section -->
+            <div class="fade-in-up bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-8 border-4 border-green-400 shadow-xl mb-8" style="animation-delay: 0.6s;">
+                <h3 class="text-xl font-bold text-gray-800 mb-6 text-center">
+                    📧 Kirim Refleksi ke Guru Wali
+                </h3>
+                
+                <form id="emailForm" class="space-y-4">
+                    <div>
+                        <label for="teacherEmail" class="block text-lg font-semibold text-gray-800 mb-2">
+                            Email Guru Wali:
+                        </label>
+                        <select id="teacherEmail" name="teacherEmail" class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all duration-300" required>
+                            <option value="">Pilih Guru Wali...</option>
+                            <option value="erniwati05@guru.smp.belajar.id">Bu Erniwati - Guru</option>
+                            <option value="sukimin08@admin.smp.belajar.id">Pak Sukimin - Kepala Sekolah</option>
+                            <option value="umaira.afifah80@guru.smp.belajar.id">Bu Umaira Afifah - Guru</option>
+                            <option value="nuriamsi18@guru.smp.belajar.id">Bu Nuriamsi - Guru</option>
+                            <option value="panji791@guru.smp.belajar.id">Pak Panji - Guru</option>
+                            <option value="novisulistiawati51@admin.smp.belajar.id">Bu Novi Sulistiawati - Staff TU</option>
+                            <option value="akhmadmuslim50@guru.smp.belajar.id">Pak Akhmad Muslim - Guru</option>
+                            <option value="uswatun.hasanah51283@guru.smp.belajar.id">Bu Uswatun Hasanah - Guru</option>
+                            <option value="sitirahayu63@guru.smp.belajar.id">Bu Siti Rahayu - Guru</option>
+                            <option value="enypujiati12@guru.smp.belajar.id">Bu Eny Pujiati - Guru</option>
+                            <option value="arifbillah91@guru.smp.belajar.id">Pak Arif Billah - Guru</option>
+                            <option value="normilayanti51@guru.smp.belajar.id">Bu Normila Yanti - Guru</option>
+                            <option value="fathurrahman551@guru.smp.belajar.id">Pak Fathurrahman - Guru</option>
+                            <option value="yohanatortet71@guru.smp.belajar.id">Bu Yohana Tortet - Guru</option>
+                            <option value="abdulhamid23@guru.smp.belajar.id">Pak Abdul Hamid - Guru</option>
+                            <option value="istuningdari71@guru.smp.belajar.id">Bu Istuning Dari - Guru</option>
+                            <option value="renilestari67@guru.smp.belajar.id">Bu Reni Lestari - Guru</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="studentClass" class="block text-lg font-semibold text-gray-800 mb-2">
+                            Kelas:
+                        </label>
+                        <input type="text" id="studentClass" name="studentClass" placeholder="Contoh: 8A, 9B, dll." class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all duration-300" required>
+                    </div>
+                    
+                    <div>
+                        <label for="additionalMessage" class="block text-lg font-semibold text-gray-800 mb-2">
+                            Pesan Tambahan (Opsional):
+                        </label>
+                        <textarea id="additionalMessage" name="additionalMessage" placeholder="Tulis pesan tambahan untuk guru wali..." rows="3" class="w-full px-4 py-3 text-lg border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200 transition-all duration-300 resize-none"></textarea>
+                    </div>
+                </form>
+                
+                <div class="text-center mt-6">
+                    <button id="sendEmailBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-button disabled:opacity-50 disabled:cursor-not-allowed">
+                        📧 Kirim Refleksi
+                    </button>
+                </div>
+                
+                <div class="bg-blue-100 rounded-lg p-4 mt-6">
+                    <p class="text-blue-800 text-sm">
+                        💡 <strong>Info:</strong> Refleksimu akan dikirim dalam format yang rapi ke email guru wali yang dipilih. Pastikan email dan kelas sudah benar!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="fade-in-up text-center space-y-4" style="animation-delay: 0.8s;">
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="backToReflectionSections()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold text-lg px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+                        ← Kembali ke Refleksi
+                    </button>
+                    <button onclick="showClosingPage()" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-glow">
+                        Selesai & Penutup ➤
+                    </button>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-4 max-w-md mx-auto">
+                    <p class="text-white text-sm">
+                        🌟 <strong>Terima kasih</strong> sudah berbagi cerita dengan Kijak! Semoga refleksimu bermanfaat.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Closing Page -->
+    <div id="closingPage" class="hidden relative min-h-screen overflow-y-auto flex items-center justify-center p-4 py-8">
+        <div class="text-center max-w-4xl mx-auto">
+            
+            <!-- Speech Bubble -->
+            <div id="closingBubble" class="fade-in-up mb-8 max-w-2xl mx-auto">
+                <div class="speech-bubble">
+                    <p id="closingText" class="text-lg md:text-xl text-gray-800 font-medium">
+                        Hm... terima kasih ya, sudah bercerita dengan Kijak hari ini. 🌿
+                    </p>
+                </div>
+            </div>
+
+            <!-- Kijak Character -->
+            <div class="fade-in-up mb-8" style="animation-delay: 0.4s;">
+                <div class="relative inline-block">
+                    <!-- Kijak Character Image -->
+                    <div class="bounce-gentle">
+                        <img src="https://lh3.googleusercontent.com/d/1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                             alt="Kijak - Teman Berceritamu" 
+                             class="w-64 h-auto mx-auto object-contain drop-shadow-2xl"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- Fallback jika gambar tidak bisa dimuat -->
+                        <div class="w-48 h-48 mx-auto bg-white bg-opacity-20 rounded-full flex items-center justify-center backdrop-blur-sm border-4 border-white border-opacity-30" style="display: none;">
+                            <div class="text-center">
+                                <div class="text-6xl mb-2">🦌</div>
+                                <p class="text-white font-semibold text-sm">Kijak</p>
+                                <p class="text-white text-xs opacity-80">Teman Berceritamu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Continue Button -->
+            <div id="closingContinueBtn" class="fade-in-up hidden" style="animation-delay: 0.8s;">
+                <button onclick="continueClosingDialog()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-button">
+                    Lanjutkan ➤
+                </button>
+            </div>
+
+            <!-- Final Message -->
+            <div id="finalMessage" class="fade-in-up hidden" style="animation-delay: 1s;">
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-8 border-4 border-yellow-400 shadow-xl max-w-3xl mx-auto mb-8">
+                    <h2 class="text-2xl md:text-3xl text-gray-800 font-bold mb-4">
+                        🌟 Sampai Jumpa Lagi, <span id="finalStudentName" class="text-blue-600"></span>!
+                    </h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Terima kasih sudah mempercayai Kijak untuk mendengar ceritamu. 
+                        Semoga perjalanan belajar dan tumbuh kembangmu selalu dipenuhi kebahagiaan dan kesuksesan! 💚
+                    </p>
+                </div>
+                
+                <button onclick="restartApplication()" class="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 pulse-glow">
+                    🔄 Mulai Cerita Baru
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Device detection: apply desktop sizing for laptops/desktops and tablets (iPad)
+        (function setupDevicePreference() {
+            function detectPreferDesktop() {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                const isiPadOS = /Macintosh/.test(ua) && 'ontouchend' in document; // iPadOS reports as Macintosh
+                const isiPad = /iPad/.test(ua) || isiPadOS;
+                const isAndroid = /Android/.test(ua);
+                const isMobilePhone = /Mobi|iPhone|iPod/.test(ua) || (isAndroid && window.innerWidth < 768);
+                // Prefer desktop for anything that's not clearly a phone (includes tablets/iPad)
+                return !isMobilePhone;
+            }
+            function applyPreference() {
+                const preferDesktop = detectPreferDesktop();
+                document.documentElement.classList.toggle('prefer-desktop', preferDesktop);
+            }
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(applyPreference, 150);
+            });
+            document.addEventListener('DOMContentLoaded', applyPreference);
+        })();
+
+        const dialogs = [
+            "Haii... assalamu'alaikum, teman baru Kijak! 🌿 Senangnya bisa berjumpa denganmu di sini. Namaku Kijak — singkatan dari Kijang Kencana! 🦌 Aku berasal dari hutan Tanah Laut yang sejuk dan indah.",
+            "Kata orang, aku suka berkelana dan mendengar cerita siapa saja, terutama anak-anak hebat seperti kamu! Di sini, kamu bisa bercerita tentang apapun — suka, duka, atau pengalamanmu hari ini. Tenang aja, Kijak selalu siap mendengar dengan penuh kepedulian. 💚"
+        ];
+        
+        let currentDialog = 0;
+        
+        function showIntroductionPage() {
+            document.getElementById('welcomePage').classList.add('hidden');
+            document.getElementById('introPage').classList.remove('hidden');
+            currentDialog = 0;
+            setTimeout(() => {
+                initializeIntroduction();
+            }, 500);
+        }
+        
+        function initializeIntroduction() {
+            const dialogText = document.getElementById('dialogText');
+            const continueBtn = document.getElementById('continueBtn');
+            const speechBubble = document.getElementById('speechBubble');
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 30;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function showNextDialog() {
+                if (currentDialog < dialogs.length - 1) {
+                    currentDialog++;
+                    
+                    speechBubble.style.opacity = '0.5';
+                    speechBubble.style.transform = 'translateY(-10px)';
+                    
+                    setTimeout(() => {
+                        typeWriter(dialogs[currentDialog], dialogText, () => {
+                            speechBubble.style.opacity = '1';
+                            speechBubble.style.transform = 'translateY(0)';
+                            
+                            if (currentDialog === dialogs.length - 1) {
+                                continueBtn.innerHTML = '🚀 Mulai Bercerita';
+                                continueBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                                continueBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                            }
+                        });
+                    }, 300);
+                } else {
+                    continueBtn.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        continueBtn.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            continueBtn.style.transform = 'scale(1)';
+                            showNameInputPage();
+                        }, 150);
+                    }, 150);
+                }
+            }
+            
+            continueBtn.addEventListener('click', showNextDialog);
+            
+            setTimeout(() => {
+                typeWriter(dialogs[0], dialogText, () => {
+                });
+            }, 500);
+        }
+        
+        function showNameInputPage() {
+            document.getElementById('introPage').classList.add('hidden');
+            document.getElementById('nameInputPage').classList.remove('hidden');
+            setTimeout(() => {
+                initializeNameInput();
+            }, 500);
+        }
+        
+        function initializeNameInput() {
+            const nameInput = document.getElementById('studentName');
+            const submitBtn = document.getElementById('submitNameBtn');
+            const nameForm = document.getElementById('nameForm');
+            
+            nameInput.addEventListener('input', function() {
+                const name = this.value.trim();
+                if (name.length >= 2) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            });
+            
+            nameForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const studentName = nameInput.value.trim();
+                if (studentName.length >= 2) {
+                    window.studentName = studentName;
+                    showNameConfirmation(studentName);
+                }
+            });
+            
+            submitBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    nameForm.dispatchEvent(new Event('submit'));
+                }
+            });
+            
+            setTimeout(() => {
+                nameInput.focus();
+            }, 1000);
+        }
+        
+        function showNameConfirmation(name) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
+                    <div class="text-6xl mb-4">🎉</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Halo, ${name}!</h3>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Senang berkenalan denganmu! Sekarang Kijak siap mendengar ceritamu.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove(); startStorySession();" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                        Mulai Bercerita! 🚀
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function startStorySession() {
+            document.getElementById('nameInputPage').classList.add('hidden');
+            document.getElementById('storyQuestionsPage').classList.remove('hidden');
+            setTimeout(() => {
+                initializeStoryQuestions();
+            }, 500);
+        }
+        
+        function initializeStoryQuestions() {
+            const questions = [
+                `Hai ${window.studentName}, bagaimana kabarmu hari ini?`,
+                "Apa hal kecil yang membuatmu tersenyum hari ini?",
+                "Kalau kamu menggambarkan harimu dengan satu kata, kata apa itu?",
+                "Kamu sedang semangat, lelah, atau biasa saja hari ini?",
+                "Siapa orang yang paling membuatmu merasa didukung belakangan ini?"
+            ];
+            
+            let currentQuestionIndex = 0;
+            const studentAnswers = [];
+            
+            const questionText = document.getElementById('questionText');
+            const questionBubble = document.getElementById('questionBubble');
+            const answerTextarea = document.getElementById('studentAnswer');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const charCount = document.getElementById('charCount');
+            const currentQuestionNumber = document.getElementById('currentQuestionNumber');
+            const totalQuestions = document.getElementById('totalQuestions');
+            const progressBar = document.getElementById('progressBar');
+            const answerForm = document.getElementById('answerForm');
+            
+            totalQuestions.textContent = questions.length;
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 30;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function updateQuestion() {
+                currentQuestionNumber.textContent = currentQuestionIndex + 1;
+                const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+                progressBar.style.width = progressPercent + '%';
+                
+                if (currentQuestionIndex === 0) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                nextBtn.innerHTML = 'Selanjutnya ➤';
+                nextBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                nextBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                
+                questionBubble.style.opacity = '0.5';
+                questionBubble.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    typeWriter(questions[currentQuestionIndex], questionText, () => {
+                        questionBubble.style.opacity = '1';
+                        questionBubble.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+                
+                if (studentAnswers[currentQuestionIndex]) {
+                    answerTextarea.value = studentAnswers[currentQuestionIndex];
+                    updateCharCount();
+                    enableNextButton();
+                } else {
+                    answerTextarea.value = '';
+                    updateCharCount();
+                    disableNextButton();
+                }
+                
+                setTimeout(() => {
+                    answerTextarea.focus();
+                }, 800);
+            }
+            
+            function updateCharCount() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const currentCharCount = document.getElementById('charCount');
+                const count = currentAnswerTextarea.value.length;
+                currentCharCount.textContent = `${count}/500`;
+                
+                if (count > 450) {
+                    currentCharCount.classList.add('text-red-500');
+                } else {
+                    currentCharCount.classList.remove('text-red-500');
+                }
+            }
+            
+            function enableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = false;
+                currentNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function disableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = true;
+                currentNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function saveCurrentAnswer() {
+                const answer = answerTextarea.value.trim();
+                if (answer.length > 0) {
+                    studentAnswers[currentQuestionIndex] = answer;
+                    return true;
+                }
+                return false;
+            }
+            
+            function showNextQuestion() {
+                if (saveCurrentAnswer()) {
+                    if (currentQuestionIndex < questions.length - 1) {
+                        currentQuestionIndex++;
+                        updateQuestion();
+                    } else {
+                        window.allAnswers.initial = [...studentAnswers];
+                        window.completedSections.add('initial');
+                        showReflectionSections();
+                    }
+                }
+            }
+            
+            function showPrevQuestion() {
+                saveCurrentAnswer();
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateQuestion();
+                }
+            }
+            
+            function showReflectionSections() {
+                document.getElementById('storyQuestionsPage').classList.add('hidden');
+                document.getElementById('reflectionSectionsPage').classList.remove('hidden');
+            }
+            
+            answerTextarea.addEventListener('input', function() {
+                updateCharCount();
+                const answer = this.value.trim();
+                if (answer.length >= 3) {
+                    enableNextButton();
+                } else {
+                    disableNextButton();
+                }
+            });
+            
+            answerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!nextBtn.disabled) {
+                    showNextQuestion();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    showNextQuestion();
+                }
+            });
+            
+            prevBtn.addEventListener('click', function() {
+                showPrevQuestion();
+            });
+            
+            updateQuestion();
+        }
+        
+        function selectReflectionSection(sectionType) {
+            window.selectedReflectionSection = sectionType;
+            
+            let sectionName = '';
+            let sectionEmoji = '';
+            
+            switch(sectionType) {
+                case 'academic':
+                    sectionName = 'Refleksi Akademik';
+                    sectionEmoji = '📚';
+                    break;
+                case 'social-emotional':
+                    sectionName = 'Pengembangan Diri (Sosial-Emosional)';
+                    sectionEmoji = '🤝';
+                    break;
+                case 'hopes-reflection':
+                    sectionName = 'Harapan dan Refleksi Diri';
+                    sectionEmoji = '🌈';
+                    break;
+            }
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
+                    <div class="text-6xl mb-4">${sectionEmoji}</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">${sectionName}</h3>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Kamu memilih bagian ${sectionName}. Kijak siap mendengar refleksimu lebih dalam!
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove(); startReflectionQuestions('${sectionType}');" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                        Mulai Refleksi! 🚀
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function startReflectionQuestions(sectionType) {
+            if (sectionType === 'academic') {
+                document.getElementById('reflectionSectionsPage').classList.add('hidden');
+                document.getElementById('storyQuestionsPage').classList.remove('hidden');
+                setTimeout(() => {
+                    initializeAcademicReflection();
+                }, 500);
+            } else if (sectionType === 'social-emotional') {
+                document.getElementById('reflectionSectionsPage').classList.add('hidden');
+                document.getElementById('storyQuestionsPage').classList.remove('hidden');
+                setTimeout(() => {
+                    initializeSocialEmotionalReflection();
+                }, 500);
+            } else if (sectionType === 'hopes-reflection') {
+                document.getElementById('reflectionSectionsPage').classList.add('hidden');
+                document.getElementById('storyQuestionsPage').classList.remove('hidden');
+                setTimeout(() => {
+                    initializeHopesReflection();
+                }, 500);
+            } else {
+                showCustomMessage(`Fitur pertanyaan refleksi untuk ${sectionType} akan segera hadir! Terima kasih sudah memilih, ${window.studentName}! 🌟`);
+            }
+        }
+        
+        function initializeAcademicReflection() {
+            const academicQuestions = [
+                "Apa mata pelajaran yang paling kamu sukai? Mengapa kamu merasa nyaman atau tertarik dengan pelajaran itu?",
+                "Mata pelajaran mana yang menurutmu paling menantang? Apa yang bisa kamu lakukan agar lebih mudah memahaminya?",
+                "Bagaimana cara kamu belajar di rumah? Apakah menurutmu cara itu sudah efektif?",
+                "Ceritakan satu keberhasilan dalam belajar yang membuatmu bangga pada semester ini.",
+                "Jika diberi kesempatan memperbaiki hasil belajar, hal apa yang ingin kamu ubah dari cara belajarmu?"
+            ];
+            
+            let currentQuestionIndex = 0;
+            const academicAnswers = [];
+            
+            const questionText = document.getElementById('questionText');
+            const questionBubble = document.getElementById('questionBubble');
+            const answerTextarea = document.getElementById('studentAnswer');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const charCount = document.getElementById('charCount');
+            const currentQuestionNumber = document.getElementById('currentQuestionNumber');
+            const totalQuestions = document.getElementById('totalQuestions');
+            const progressBar = document.getElementById('progressBar');
+            const answerForm = document.getElementById('answerForm');
+            
+            totalQuestions.textContent = academicQuestions.length;
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 30;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function updateAcademicQuestion() {
+                currentQuestionNumber.textContent = currentQuestionIndex + 1;
+                const progressPercent = ((currentQuestionIndex + 1) / academicQuestions.length) * 100;
+                progressBar.style.width = progressPercent + '%';
+                
+                if (currentQuestionIndex === 0) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                if (currentQuestionIndex === academicQuestions.length - 1) {
+                    currentNextBtn.innerHTML = '🎉 Selesai Refleksi';
+                    currentNextBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                    currentNextBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                } else {
+                    currentNextBtn.innerHTML = 'Selanjutnya ➤';
+                    currentNextBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    currentNextBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                }
+                
+                questionBubble.style.opacity = '0.5';
+                questionBubble.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    typeWriter(academicQuestions[currentQuestionIndex], questionText, () => {
+                        questionBubble.style.opacity = '1';
+                        questionBubble.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+                
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                if (academicAnswers[currentQuestionIndex]) {
+                    currentAnswerTextarea.value = academicAnswers[currentQuestionIndex];
+                    updateCharCount();
+                    enableNextButton();
+                } else {
+                    currentAnswerTextarea.value = '';
+                    updateCharCount();
+                    disableNextButton();
+                }
+                
+                setTimeout(() => {
+                    currentAnswerTextarea.focus();
+                }, 800);
+            }
+            
+            function updateCharCount() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const currentCharCount = document.getElementById('charCount');
+                const count = currentAnswerTextarea.value.length;
+                currentCharCount.textContent = `${count}/500`;
+                
+                if (count > 450) {
+                    currentCharCount.classList.add('text-red-500');
+                } else {
+                    currentCharCount.classList.remove('text-red-500');
+                }
+            }
+            
+            function enableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = false;
+                currentNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function disableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = true;
+                currentNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function saveCurrentAcademicAnswer() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const answer = currentAnswerTextarea.value.trim();
+                if (answer.length > 0) {
+                    academicAnswers[currentQuestionIndex] = answer;
+                    return true;
+                }
+                return false;
+            }
+            
+            function showNextAcademicQuestion() {
+                if (saveCurrentAcademicAnswer()) {
+                    if (currentQuestionIndex < academicQuestions.length - 1) {
+                        currentQuestionIndex++;
+                        updateAcademicQuestion();
+                    } else {
+                        showAcademicCompletion();
+                    }
+                }
+            }
+            
+            function showPrevAcademicQuestion() {
+                saveCurrentAcademicAnswer();
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateAcademicQuestion();
+                }
+            }
+            
+            function showAcademicCompletion() {
+                window.allAnswers.academic = [...academicAnswers];
+                window.completedSections.add('academic');
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                overlay.innerHTML = `
+                    <div class="bg-white rounded-lg p-8 max-w-lg mx-4 text-center shadow-2xl">
+                        <div class="text-6xl mb-4">📚</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Refleksi Akademik Selesai!</h3>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Terima kasih ${window.studentName}! Kijak senang mendengar refleksi akademikmu. Semoga ini membantu kamu lebih memahami perjalanan belajarmu! 💙
+                        </p>
+                        <button onclick="this.parentElement.parentElement.remove(); backToReflectionSections();" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                            Pilih Refleksi Lain 🔄
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+            
+            answerTextarea.value = '';
+            updateCharCount();
+            disableNextButton();
+            
+            const newAnswerForm = answerForm.cloneNode(true);
+            answerForm.parentNode.replaceChild(newAnswerForm, answerForm);
+            
+            const newNextBtn = nextBtn.cloneNode(true);
+            nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+            
+            const newPrevBtn = prevBtn.cloneNode(true);
+            prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+            
+            const currentAnswerForm = document.getElementById('answerForm');
+            const currentNextBtn = document.getElementById('nextQuestionBtn');
+            const currentPrevBtn = document.getElementById('prevQuestionBtn');
+            const currentAnswerTextarea = document.getElementById('studentAnswer');
+            
+            currentAnswerTextarea.addEventListener('input', function() {
+                updateCharCount();
+                const answer = this.value.trim();
+                if (answer.length >= 3) {
+                    enableNextButton();
+                } else {
+                    disableNextButton();
+                }
+            });
+            
+            currentAnswerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentNextBtn.disabled) {
+                    showNextAcademicQuestion();
+                }
+            });
+            
+            currentNextBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    showNextAcademicQuestion();
+                }
+            });
+            
+            currentPrevBtn.addEventListener('click', function() {
+                showPrevAcademicQuestion();
+            });
+            
+            updateAcademicQuestion();
+        }
+        
+        function initializeSocialEmotionalReflection() {
+            const socialEmotionalQuestions = [
+                "Dalam beberapa minggu terakhir, hal apa yang paling sering membuatmu merasa senang di sekolah? Bagaimana perasaanmu saat itu?",
+                "Apakah ada hal yang membuatmu merasa sedih, cemas, atau tidak nyaman di sekolah? Ceritakan, apa yang terjadi dan bagaimana kamu mengatasinya.",
+                "Ketika kamu mengalami masalah (misalnya dengan teman, pelajaran, atau di rumah), apa yang biasanya kamu lakukan? Apakah ada orang yang kamu percaya untuk bercerita?",
+                "Pernahkah kamu merasa kurang semangat untuk datang ke sekolah? Menurutmu, apa penyebabnya dan bagaimana kamu ingin memperbaikinya?",
+                "Jika kamu boleh meminta bantuan atau dukungan dari guru wali, hal apa yang paling ingin kamu bicarakan atau kamu butuhkan sekarang?"
+            ];
+            
+            let currentQuestionIndex = 0;
+            const socialEmotionalAnswers = [];
+            
+            const questionText = document.getElementById('questionText');
+            const questionBubble = document.getElementById('questionBubble');
+            const answerTextarea = document.getElementById('studentAnswer');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const charCount = document.getElementById('charCount');
+            const currentQuestionNumber = document.getElementById('currentQuestionNumber');
+            const totalQuestions = document.getElementById('totalQuestions');
+            const progressBar = document.getElementById('progressBar');
+            const answerForm = document.getElementById('answerForm');
+            
+            totalQuestions.textContent = socialEmotionalQuestions.length;
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 30;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function updateSocialEmotionalQuestion() {
+                currentQuestionNumber.textContent = currentQuestionIndex + 1;
+                const progressPercent = ((currentQuestionIndex + 1) / socialEmotionalQuestions.length) * 100;
+                progressBar.style.width = progressPercent + '%';
+                
+                if (currentQuestionIndex === 0) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                if (currentQuestionIndex === socialEmotionalQuestions.length - 1) {
+                    currentNextBtn.innerHTML = '🎉 Selesai Refleksi';
+                    currentNextBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                    currentNextBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                } else {
+                    currentNextBtn.innerHTML = 'Selanjutnya ➤';
+                    currentNextBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    currentNextBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                }
+                
+                questionBubble.style.opacity = '0.5';
+                questionBubble.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    typeWriter(socialEmotionalQuestions[currentQuestionIndex], questionText, () => {
+                        questionBubble.style.opacity = '1';
+                        questionBubble.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+                
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                if (socialEmotionalAnswers[currentQuestionIndex]) {
+                    currentAnswerTextarea.value = socialEmotionalAnswers[currentQuestionIndex];
+                    updateCharCount();
+                    enableNextButton();
+                } else {
+                    currentAnswerTextarea.value = '';
+                    updateCharCount();
+                    disableNextButton();
+                }
+                
+                setTimeout(() => {
+                    currentAnswerTextarea.focus();
+                }, 800);
+            }
+            
+            function updateCharCount() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const currentCharCount = document.getElementById('charCount');
+                const count = currentAnswerTextarea.value.length;
+                currentCharCount.textContent = `${count}/500`;
+                
+                if (count > 450) {
+                    currentCharCount.classList.add('text-red-500');
+                } else {
+                    currentCharCount.classList.remove('text-red-500');
+                }
+            }
+            
+            function enableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = false;
+                currentNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function disableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = true;
+                currentNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function saveCurrentSocialEmotionalAnswer() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const answer = currentAnswerTextarea.value.trim();
+                if (answer.length > 0) {
+                    socialEmotionalAnswers[currentQuestionIndex] = answer;
+                    return true;
+                }
+                return false;
+            }
+            
+            function showNextSocialEmotionalQuestion() {
+                if (saveCurrentSocialEmotionalAnswer()) {
+                    if (currentQuestionIndex < socialEmotionalQuestions.length - 1) {
+                        currentQuestionIndex++;
+                        updateSocialEmotionalQuestion();
+                    } else {
+                        showSocialEmotionalCompletion();
+                    }
+                }
+            }
+            
+            function showPrevSocialEmotionalQuestion() {
+                saveCurrentSocialEmotionalAnswer();
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateSocialEmotionalQuestion();
+                }
+            }
+            
+            function showSocialEmotionalCompletion() {
+                window.allAnswers.socialEmotional = [...socialEmotionalAnswers];
+                window.completedSections.add('socialEmotional');
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                overlay.innerHTML = `
+                    <div class="bg-white rounded-lg p-8 max-w-lg mx-4 text-center shadow-2xl">
+                        <div class="text-6xl mb-4">🤝</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Pengembangan Diri Selesai!</h3>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Terima kasih ${window.studentName}! Kijak senang mendengar refleksi sosial-emosionalmu. Semoga ini membantu kamu lebih memahami diri dan hubunganmu dengan orang lain! 💚
+                        </p>
+                        <button onclick="this.parentElement.parentElement.remove(); backToReflectionSections();" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                            Pilih Refleksi Lain 🔄
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+            
+            answerTextarea.value = '';
+            updateCharCount();
+            disableNextButton();
+            
+            const newAnswerForm = answerForm.cloneNode(true);
+            answerForm.parentNode.replaceChild(newAnswerForm, answerForm);
+            
+            const newNextBtn = nextBtn.cloneNode(true);
+            nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+            
+            const newPrevBtn = prevBtn.cloneNode(true);
+            prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+            
+            const currentAnswerForm = document.getElementById('answerForm');
+            const currentNextBtn = document.getElementById('nextQuestionBtn');
+            const currentPrevBtn = document.getElementById('prevQuestionBtn');
+            const currentAnswerTextarea = document.getElementById('studentAnswer');
+            
+            currentAnswerTextarea.addEventListener('input', function() {
+                updateCharCount();
+                const answer = this.value.trim();
+                if (answer.length >= 3) {
+                    enableNextButton();
+                } else {
+                    disableNextButton();
+                }
+            });
+            
+            currentAnswerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentNextBtn.disabled) {
+                    showNextSocialEmotionalQuestion();
+                }
+            });
+            
+            currentNextBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    showNextSocialEmotionalQuestion();
+                }
+            });
+            
+            currentPrevBtn.addEventListener('click', function() {
+                showPrevSocialEmotionalQuestion();
+            });
+            
+            updateSocialEmotionalQuestion();
+        }
+        
+        function initializeHopesReflection() {
+            const hopesReflectionQuestions = [
+                "Bagaimana perasaanmu tentang dirimu sendiri minggu/bulan ini? Apa yang paling kamu syukuri?",
+                "Hal apa yang menurutmu berjalan dengan baik akhir-akhir ini (baik di sekolah maupun di rumah)?",
+                "Apakah ada hal yang belum sesuai harapanmu? Ceritakan apa yang membuatmu merasa begitu.",
+                "Apa hal kecil yang ingin kamu perbaiki atau tingkatkan dalam waktu dekat (misalnya kebiasaan belajar, sikap, atau hubungan dengan teman)?",
+                "Apa harapanmu untuk minggu/bulan berikutnya agar kamu bisa merasa lebih baik dan berkembang?"
+            ];
+            
+            let currentQuestionIndex = 0;
+            const hopesReflectionAnswers = [];
+            
+            const questionText = document.getElementById('questionText');
+            const questionBubble = document.getElementById('questionBubble');
+            const answerTextarea = document.getElementById('studentAnswer');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const charCount = document.getElementById('charCount');
+            const currentQuestionNumber = document.getElementById('currentQuestionNumber');
+            const totalQuestions = document.getElementById('totalQuestions');
+            const progressBar = document.getElementById('progressBar');
+            const answerForm = document.getElementById('answerForm');
+            
+            totalQuestions.textContent = hopesReflectionQuestions.length;
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 30;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function updateHopesReflectionQuestion() {
+                currentQuestionNumber.textContent = currentQuestionIndex + 1;
+                const progressPercent = ((currentQuestionIndex + 1) / hopesReflectionQuestions.length) * 100;
+                progressBar.style.width = progressPercent + '%';
+                
+                if (currentQuestionIndex === 0) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+                
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                if (currentQuestionIndex === hopesReflectionQuestions.length - 1) {
+                    currentNextBtn.innerHTML = '🎉 Selesai Refleksi';
+                    currentNextBtn.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                    currentNextBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                } else {
+                    currentNextBtn.innerHTML = 'Selanjutnya ➤';
+                    currentNextBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    currentNextBtn.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                }
+                
+                questionBubble.style.opacity = '0.5';
+                questionBubble.style.transform = 'translateY(-10px)';
+                
+                setTimeout(() => {
+                    typeWriter(hopesReflectionQuestions[currentQuestionIndex], questionText, () => {
+                        questionBubble.style.opacity = '1';
+                        questionBubble.style.transform = 'translateY(0)';
+                    });
+                }, 300);
+                
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                if (hopesReflectionAnswers[currentQuestionIndex]) {
+                    currentAnswerTextarea.value = hopesReflectionAnswers[currentQuestionIndex];
+                    updateCharCount();
+                    enableNextButton();
+                } else {
+                    currentAnswerTextarea.value = '';
+                    updateCharCount();
+                    disableNextButton();
+                }
+                
+                setTimeout(() => {
+                    currentAnswerTextarea.focus();
+                }, 800);
+            }
+            
+            function updateCharCount() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const currentCharCount = document.getElementById('charCount');
+                const count = currentAnswerTextarea.value.length;
+                currentCharCount.textContent = `${count}/500`;
+                
+                if (count > 450) {
+                    currentCharCount.classList.add('text-red-500');
+                } else {
+                    currentCharCount.classList.remove('text-red-500');
+                }
+            }
+            
+            function enableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = false;
+                currentNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function disableNextButton() {
+                const currentNextBtn = document.getElementById('nextQuestionBtn');
+                currentNextBtn.disabled = true;
+                currentNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            
+            function saveCurrentHopesReflectionAnswer() {
+                const currentAnswerTextarea = document.getElementById('studentAnswer');
+                const answer = currentAnswerTextarea.value.trim();
+                if (answer.length > 0) {
+                    hopesReflectionAnswers[currentQuestionIndex] = answer;
+                    return true;
+                }
+                return false;
+            }
+            
+            function showNextHopesReflectionQuestion() {
+                if (saveCurrentHopesReflectionAnswer()) {
+                    if (currentQuestionIndex < hopesReflectionQuestions.length - 1) {
+                        currentQuestionIndex++;
+                        updateHopesReflectionQuestion();
+                    } else {
+                        showHopesReflectionCompletion();
+                    }
+                }
+            }
+            
+            function showPrevHopesReflectionQuestion() {
+                saveCurrentHopesReflectionAnswer();
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    updateHopesReflectionQuestion();
+                }
+            }
+            
+            function showHopesReflectionCompletion() {
+                window.allAnswers.hopesReflection = [...hopesReflectionAnswers];
+                window.completedSections.add('hopesReflection');
+                
+                const overlay = document.createElement('div');
+                overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                overlay.innerHTML = `
+                    <div class="bg-white rounded-lg p-8 max-w-lg mx-4 text-center shadow-2xl">
+                        <div class="text-6xl mb-4">🌈</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Harapan & Refleksi Diri Selesai!</h3>
+                        <p class="text-lg text-gray-700 mb-6">
+                            Terima kasih ${window.studentName}! Kijak senang mendengar harapan dan refleksi mendalam tentang dirimu. Semoga ini membantu kamu terus tumbuh menjadi pribadi yang lebih baik! ✨
+                        </p>
+                        <button onclick="this.parentElement.parentElement.remove(); backToReflectionSections();" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                            Pilih Refleksi Lain 🔄
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+            }
+            
+            answerTextarea.value = '';
+            updateCharCount();
+            disableNextButton();
+            
+            const newAnswerForm = answerForm.cloneNode(true);
+            answerForm.parentNode.replaceChild(newAnswerForm, answerForm);
+            
+            const newNextBtn = nextBtn.cloneNode(true);
+            nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+            
+            const newPrevBtn = prevBtn.cloneNode(true);
+            prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
+            
+            const currentAnswerForm = document.getElementById('answerForm');
+            const currentNextBtn = document.getElementById('nextQuestionBtn');
+            const currentPrevBtn = document.getElementById('prevQuestionBtn');
+            const currentAnswerTextarea = document.getElementById('studentAnswer');
+            
+            currentAnswerTextarea.addEventListener('input', function() {
+                updateCharCount();
+                const answer = this.value.trim();
+                if (answer.length >= 3) {
+                    enableNextButton();
+                } else {
+                    disableNextButton();
+                }
+            });
+            
+            currentAnswerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentNextBtn.disabled) {
+                    showNextHopesReflectionQuestion();
+                }
+            });
+            
+            currentNextBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    showNextHopesReflectionQuestion();
+                }
+            });
+            
+            currentPrevBtn.addEventListener('click', function() {
+                showPrevHopesReflectionQuestion();
+            });
+            
+            updateHopesReflectionQuestion();
+        }
+        
+        function updateProgressIndicators() {
+            const progressElements = {
+                'initial': document.getElementById('progressInitial'),
+                'academic': document.getElementById('progressAcademic'),
+                'socialEmotional': document.getElementById('progressSocial'),
+                'hopesReflection': document.getElementById('progressHopes')
+            };
+            
+            Object.keys(progressElements).forEach(section => {
+                const element = progressElements[section];
+                if (window.completedSections && window.completedSections.has(section)) {
+                    element.classList.remove('bg-gray-400');
+                    element.classList.add('bg-green-500');
+                } else {
+                    element.classList.remove('bg-green-500');
+                    element.classList.add('bg-gray-400');
+                }
+            });
+        }
+
+        function backToReflectionSections() {
+            document.getElementById('storyQuestionsPage').classList.add('hidden');
+            document.getElementById('summaryPage').classList.add('hidden');
+            document.getElementById('reflectionSectionsPage').classList.remove('hidden');
+            
+            updateProgressIndicators();
+            
+            const continueBtn = document.getElementById('continueToSummaryBtn');
+            const requiredSections = ['initial', 'academic', 'socialEmotional', 'hopesReflection'];
+            const allCompleted = requiredSections.every(section => window.completedSections && window.completedSections.has(section));
+            
+            if (allCompleted) {
+                continueBtn.classList.remove('hidden');
+            } else {
+                continueBtn.classList.add('hidden');
+            }
+        }
+        
+        function showReflectionSections() {
+            document.getElementById('storyQuestionsPage').classList.add('hidden');
+            document.getElementById('reflectionSectionsPage').classList.remove('hidden');
+            
+            updateProgressIndicators();
+            
+            const continueBtn = document.getElementById('continueToSummaryBtn');
+            const requiredSections = ['initial', 'academic', 'socialEmotional', 'hopesReflection'];
+            const allCompleted = requiredSections.every(section => window.completedSections && window.completedSections.has(section));
+            
+            if (allCompleted) {
+                continueBtn.classList.remove('hidden');
+            } else {
+                continueBtn.classList.add('hidden');
+            }
+        }
+        
+        window.allAnswers = {
+            initial: [],
+            academic: [],
+            socialEmotional: [],
+            hopesReflection: []
+        };
+        
+        window.completedSections = new Set();
+        
+        function showStorySummary() {
+            showCustomMessage(`Fitur ringkasan cerita akan segera hadir! Terima kasih sudah berbagi cerita dengan Kijak, ${window.studentName}! 🌟`);
+        }
+        
+        function showSummaryPage() {
+            document.getElementById('reflectionSectionsPage').classList.add('hidden');
+            document.getElementById('summaryPage').classList.remove('hidden');
+            
+            populateSummaryContent();
+            initializeEmailForm();
+        }
+        
+        function populateSummaryContent() {
+            const summaryContent = document.getElementById('summaryContent');
+            const summaryStudentName = document.getElementById('summaryStudentName');
+            
+            summaryStudentName.textContent = window.studentName || 'Teman Kijak';
+            
+            let htmlContent = '';
+            
+            if (window.allAnswers.initial && window.allAnswers.initial.length > 0) {
+                htmlContent += `
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-6 border-4 border-blue-400 shadow-xl">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            💭 Cerita Awal Bersama Kijak
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const initialQuestions = [
+                    `Hai ${window.studentName}, bagaimana kabarmu hari ini?`,
+                    "Apa hal kecil yang membuatmu tersenyum hari ini?",
+                    "Kalau kamu menggambarkan harimu dengan satu kata, kata apa itu?",
+                    "Kamu sedang semangat, lelah, atau biasa saja hari ini?",
+                    "Siapa orang yang paling membuatmu merasa didukung belakangan ini?"
+                ];
+                
+                window.allAnswers.initial.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        htmlContent += `
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <p class="font-semibold text-gray-700 mb-2">${initialQuestions[index]}</p>
+                                <p class="text-gray-600 italic">"${answer}"</p>
+                            </div>
+                        `;
+                    }
+                });
+                
+                htmlContent += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (window.allAnswers.academic && window.allAnswers.academic.length > 0) {
+                htmlContent += `
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-6 border-4 border-blue-400 shadow-xl">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            📚 Refleksi Akademik
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const academicQuestions = [
+                    "Apa mata pelajaran yang paling kamu sukai? Mengapa kamu merasa nyaman atau tertarik dengan pelajaran itu?",
+                    "Mata pelajaran mana yang menurutmu paling menantang? Apa yang bisa kamu lakukan agar lebih mudah memahaminya?",
+                    "Bagaimana cara kamu belajar di rumah? Apakah menurutmu cara itu sudah efektif?",
+                    "Ceritakan satu keberhasilan dalam belajar yang membuatmu bangga pada semester ini.",
+                    "Jika diberi kesempatan memperbaiki hasil belajar, hal apa yang ingin kamu ubah dari cara belajarmu?"
+                ];
+                
+                window.allAnswers.academic.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        htmlContent += `
+                            <div class="border-l-4 border-blue-400 pl-4">
+                                <p class="font-semibold text-gray-700 mb-2">${academicQuestions[index]}</p>
+                                <p class="text-gray-600 italic">"${answer}"</p>
+                            </div>
+                        `;
+                    }
+                });
+                
+                htmlContent += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (window.allAnswers.socialEmotional && window.allAnswers.socialEmotional.length > 0) {
+                htmlContent += `
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-6 border-4 border-green-400 shadow-xl">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            🤝 Pengembangan Diri (Sosial-Emosional)
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const socialEmotionalQuestions = [
+                    "Dalam beberapa minggu terakhir, hal apa yang paling sering membuatmu merasa senang di sekolah? Bagaimana perasaanmu saat itu?",
+                    "Apakah ada hal yang membuatmu merasa sedih, cemas, atau tidak nyaman di sekolah? Ceritakan, apa yang terjadi dan bagaimana kamu mengatasinya.",
+                    "Ketika kamu mengalami masalah (misalnya dengan teman, pelajaran, atau di rumah), apa yang biasanya kamu lakukan? Apakah ada orang yang kamu percaya untuk bercerita?",
+                    "Pernahkah kamu merasa kurang semangat untuk datang ke sekolah? Menurutmu, apa penyebabnya dan bagaimana kamu ingin memperbaikinya?",
+                    "Jika kamu boleh meminta bantuan atau dukungan dari guru wali, hal apa yang paling ingin kamu bicarakan atau kamu butuhkan sekarang?"
+                ];
+                
+                window.allAnswers.socialEmotional.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        htmlContent += `
+                            <div class="border-l-4 border-green-400 pl-4">
+                                <p class="font-semibold text-gray-700 mb-2">${socialEmotionalQuestions[index]}</p>
+                                <p class="text-gray-600 italic">"${answer}"</p>
+                            </div>
+                        `;
+                    }
+                });
+                
+                htmlContent += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (window.allAnswers.hopesReflection && window.allAnswers.hopesReflection.length > 0) {
+                htmlContent += `
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-6 border-4 border-purple-400 shadow-xl">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                            🌈 Harapan & Refleksi Diri
+                        </h3>
+                        <div class="space-y-4">
+                `;
+                
+                const hopesReflectionQuestions = [
+                    "Bagaimana perasaanmu tentang dirimu sendiri minggu/bulan ini? Apa yang paling kamu syukuri?",
+                    "Hal apa yang menurutmu berjalan dengan baik akhir-akhir ini (baik di sekolah maupun di rumah)?",
+                    "Apakah ada hal yang belum sesuai harapanmu? Ceritakan apa yang membuatmu merasa begitu.",
+                    "Apa hal kecil yang ingin kamu perbaiki atau tingkatkan dalam waktu dekat (misalnya kebiasaan belajar, sikap, atau hubungan dengan teman)?",
+                    "Apa harapanmu untuk minggu/bulan berikutnya agar kamu bisa merasa lebih baik dan berkembang?"
+                ];
+                
+                window.allAnswers.hopesReflection.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        htmlContent += `
+                            <div class="border-l-4 border-purple-400 pl-4">
+                                <p class="font-semibold text-gray-700 mb-2">${hopesReflectionQuestions[index]}</p>
+                                <p class="text-gray-600 italic">"${answer}"</p>
+                            </div>
+                        `;
+                    }
+                });
+                
+                htmlContent += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (!htmlContent) {
+                htmlContent = `
+                    <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-8 border-4 border-yellow-400 shadow-xl text-center">
+                        <div class="text-6xl mb-4">🤔</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Belum Ada Refleksi</h3>
+                        <p class="text-gray-700">
+                            Kamu belum menyelesaikan refleksi apapun. Yuk kembali dan pilih salah satu bagian refleksi untuk memulai!
+                        </p>
+                    </div>
+                `;
+            }
+            
+            summaryContent.innerHTML = htmlContent;
+        }
+        
+        function initializeEmailForm() {
+            const emailForm = document.getElementById('emailForm');
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            const teacherEmail = document.getElementById('teacherEmail');
+            const studentClass = document.getElementById('studentClass');
+            
+            function checkFormValidity() {
+                if (teacherEmail.value && studentClass.value.trim()) {
+                    sendEmailBtn.disabled = false;
+                    sendEmailBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    sendEmailBtn.disabled = true;
+                    sendEmailBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
+            teacherEmail.addEventListener('change', checkFormValidity);
+            studentClass.addEventListener('input', checkFormValidity);
+            
+            sendEmailBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    sendReflectionEmail();
+                }
+            });
+            
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!sendEmailBtn.disabled) {
+                    sendReflectionEmail();
+                }
+            });
+            
+            checkFormValidity();
+        }
+        
+        function sendReflectionEmail() {
+            const teacherEmail = document.getElementById('teacherEmail').value;
+            const studentClass = document.getElementById('studentClass').value.trim();
+            const additionalMessage = document.getElementById('additionalMessage').value.trim();
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            
+            sendEmailBtn.disabled = true;
+            sendEmailBtn.innerHTML = '⏳ Mengirim...';
+            sendEmailBtn.classList.add('opacity-75');
+            
+            let emailSubject = `Refleksi Siswa - ${window.studentName} (${studentClass}) - KeKiCak`;
+            let emailBody = `Assalamu'alaikum Warahmatullahi Wabarakatuh,
+
+Berikut adalah refleksi dari siswa:
+
+Nama: ${window.studentName}
+Kelas: ${studentClass}
+Tanggal: ${new Date().toLocaleDateString('id-ID', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+})}
+
+=== REFLEKSI BERSAMA KIJAK ===
+
+`;
+
+            if (window.allAnswers.initial && window.allAnswers.initial.length > 0) {
+                emailBody += `
+💭 CERITA AWAL BERSAMA KIJAK:
+`;
+                const initialQuestions = [
+                    `Hai ${window.studentName}, bagaimana kabarmu hari ini?`,
+                    "Apa hal kecil yang membuatmu tersenyum hari ini?",
+                    "Kalau kamu menggambarkan harimu dengan satu kata, kata apa itu?",
+                    "Kamu sedang semangat, lelah, atau biasa saja hari ini?",
+                    "Siapa orang yang paling membuatmu merasa didukung belakangan ini?"
+                ];
+                
+                window.allAnswers.initial.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${initialQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.academic && window.allAnswers.academic.length > 0) {
+                emailBody += `
+📚 REFLEKSI AKADEMIK:
+`;
+                const academicQuestions = [
+                    "Apa mata pelajaran yang paling kamu sukai? Mengapa kamu merasa nyaman atau tertarik dengan pelajaran itu?",
+                    "Mata pelajaran mana yang menurutmu paling menantang? Apa yang bisa kamu lakukan agar lebih mudah memahaminya?",
+                    "Bagaimana cara kamu belajar di rumah? Apakah menurutmu cara itu sudah efektif?",
+                    "Ceritakan satu keberhasilan dalam belajar yang membuatmu bangga pada semester ini.",
+                    "Jika diberi kesempatan memperbaiki hasil belajar, hal apa yang ingin kamu ubah dari cara belajarmu?"
+                ];
+                
+                window.allAnswers.academic.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${academicQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.socialEmotional && window.allAnswers.socialEmotional.length > 0) {
+                emailBody += `
+🤝 PENGEMBANGAN DIRI (SOSIAL-EMOSIONAL):
+`;
+                const socialEmotionalQuestions = [
+                    "Dalam beberapa minggu terakhir, hal apa yang paling sering membuatmu merasa senang di sekolah? Bagaimana perasaanmu saat itu?",
+                    "Apakah ada hal yang membuatmu merasa sedih, cemas, atau tidak nyaman di sekolah? Ceritakan, apa yang terjadi dan bagaimana kamu mengatasinya.",
+                    "Ketika kamu mengalami masalah (misalnya dengan teman, pelajaran, atau di rumah), apa yang biasanya kamu lakukan? Apakah ada orang yang kamu percaya untuk bercerita?",
+                    "Pernahkah kamu merasa kurang semangat untuk datang ke sekolah? Menurutmu, apa penyebabnya dan bagaimana kamu ingin memperbaikinya?",
+                    "Jika kamu boleh meminta bantuan atau dukungan dari guru wali, hal apa yang paling ingin kamu bicarakan atau kamu butuhkan sekarang?"
+                ];
+                
+                window.allAnswers.socialEmotional.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${socialEmotionalQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.hopesReflection && window.allAnswers.hopesReflection.length > 0) {
+                emailBody += `
+🌈 HARAPAN & REFLEKSI DIRI:
+`;
+                const hopesReflectionQuestions = [
+                    "Bagaimana perasaanmu tentang dirimu sendiri minggu/bulan ini? Apa yang paling kamu syukuri?",
+                    "Hal apa yang menurutmu berjalan dengan baik akhir-akhir ini (baik di sekolah maupun di rumah)?",
+                    "Apakah ada hal yang belum sesuai harapanmu? Ceritakan apa yang membuatmu merasa begitu.",
+                    "Apa hal kecil yang ingin kamu perbaiki atau tingkatkan dalam waktu dekat (misalnya kebiasaan belajar, sikap, atau hubungan dengan teman)?",
+                    "Apa harapanmu untuk minggu/bulan berikutnya agar kamu bisa merasa lebih baik dan berkembang?"
+                ];
+                
+                window.allAnswers.hopesReflection.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${hopesReflectionQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (additionalMessage) {
+                emailBody += `
+💌 PESAN TAMBAHAN:
+"${additionalMessage}"
+`;
+            }
+
+            emailBody += `
+
+=== AKHIR REFLEKSI ===
+
+Refleksi ini dibuat melalui aplikasi KeKiCak (Kepedulian Kijang Cakap) - UPTD SMP Negeri 6 Pelaihari.
+
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.`;
+
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init("YOUR_PUBLIC_KEY");
+                
+                const templateParams = {
+                    to_email: teacherEmail,
+                    subject: emailSubject,
+                    message: emailBody,
+                    student_name: window.studentName,
+                    student_class: studentClass
+                };
+                
+                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        showEmailSuccess();
+                        resetSendButton();
+                    }, function(error) {
+                        console.log('FAILED...', error);
+                        fallbackToMailto(emailSubject, emailBody, teacherEmail);
+                    });
+            } else {
+                fallbackToMailto(emailSubject, emailBody, teacherEmail);
+            }
+        }
+        
+        // UPDATED: auto choose Gmail Web on desktop, Gmail App on mobile
+        function fallbackToMailto(emailSubject, emailBody, teacherEmail) {
+            resetSendButton();
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            if (isMobile) {
+                openGmailApp(teacherEmail);
+            } else {
+                openGmailCompose(teacherEmail);
+            }
+            showEmailSuccess();
+        }
+        
+        function resetSendButton() {
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            sendEmailBtn.disabled = false;
+            sendEmailBtn.innerHTML = '📧 Kirim Refleksi';
+            sendEmailBtn.classList.remove('opacity-75');
+        }
+        
+        function showMailtoFallback(mailtoLink, teacherEmail) {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                openGmailApp(teacherEmail);
+            } else {
+                openGmailCompose(teacherEmail);
+            }
+            showEmailSuccess();
+        }
+        
+        function openGmailApp(teacherEmail) {
+            const emailSubject = `Refleksi Siswa - ${window.studentName} (${document.getElementById('studentClass').value.trim()}) - KeKiCak`;
+            const emailBody = prepareEmailContent();
+            const gmailAppUrl = `googlegmail://co?to=${encodeURIComponent(teacherEmail)}&subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            const startTime = Date.now();
+            window.location.href = gmailAppUrl;
+            setTimeout(() => {
+                if (Date.now() - startTime < 2100) {
+                    openGmailCompose(teacherEmail);
+                }
+            }, 2000);
+        }
+        
+        function openEmailApp(mailtoLink) {
+            window.location.href = mailtoLink;
+        }
+        
+        function copyEmailContent(teacherEmail) {
+            const emailSubject = `Refleksi Siswa - ${window.studentName} (${document.getElementById('studentClass').value.trim()}) - KeKiCak`;
+            const emailBody = prepareEmailContent();
+            
+            const fullEmailContent = `Kepada: ${teacherEmail}
+Subjek: ${emailSubject}
+
+${emailBody}`;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(fullEmailContent).then(() => {
+                    showCopySuccess(teacherEmail);
+                }).catch(() => {
+                    showManualCopy(fullEmailContent, teacherEmail);
+                });
+            } else {
+                showManualCopy(fullEmailContent, teacherEmail);
+            }
+        }
+        
+        function prepareEmailContent() {
+            let emailBody = `Assalamu'alaikum Warahmatullahi Wabarakatuh,
+
+Berikut adalah refleksi dari siswa:
+
+Nama: ${window.studentName}
+Kelas: ${document.getElementById('studentClass').value.trim()}
+Tanggal: ${new Date().toLocaleDateString('id-ID', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+})}
+
+=== REFLEKSI BERSAMA KIJAK ===
+
+`;
+
+            if (window.allAnswers.initial && window.allAnswers.initial.length > 0) {
+                emailBody += `
+💭 CERITA AWAL BERSAMA KIJAK:
+`;
+                const initialQuestions = [
+                    `Hai ${window.studentName}, bagaimana kabarmu hari ini?`,
+                    "Apa hal kecil yang membuatmu tersenyum hari ini?",
+                    "Kalau kamu menggambarkan harimu dengan satu kata, kata apa itu?",
+                    "Kamu sedang semangat, lelah, atau biasa saja hari ini?",
+                    "Siapa orang yang paling membuatmu merasa didukung belakangan ini?"
+                ];
+                
+                window.allAnswers.initial.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${initialQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.academic && window.allAnswers.academic.length > 0) {
+                emailBody += `
+📚 REFLEKSI AKADEMIK:
+`;
+                const academicQuestions = [
+                    "Apa mata pelajaran yang paling kamu sukai? Mengapa kamu merasa nyaman atau tertarik dengan pelajaran itu?",
+                    "Mata pelajaran mana yang menurutmu paling menantang? Apa yang bisa kamu lakukan agar lebih mudah memahaminya?",
+                    "Bagaimana cara kamu belajar di rumah? Apakah menurutmu cara itu sudah efektif?",
+                    "Ceritakan satu keberhasilan dalam belajar yang membuatmu bangga pada semester ini.",
+                    "Jika diberi kesempatan memperbaiki hasil belajar, hal apa yang ingin kamu ubah dari cara belajarmu?"
+                ];
+                
+                window.allAnswers.academic.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${academicQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.socialEmotional && window.allAnswers.socialEmotional.length > 0) {
+                emailBody += `
+🤝 PENGEMBANGAN DIRI (SOSIAL-EMOSIONAL):
+`;
+                const socialEmotionalQuestions = [
+                    "Dalam beberapa minggu terakhir, hal apa yang paling sering membuatmu merasa senang di sekolah? Bagaimana perasaanmu saat itu?",
+                    "Apakah ada hal yang membuatmu merasa sedih, cemas, atau tidak nyaman di sekolah? Ceritakan, apa yang terjadi dan bagaimana kamu mengatasinya.",
+                    "Ketika kamu mengalami masalah (misalnya dengan teman, pelajaran, atau di rumah), apa yang biasanya kamu lakukan? Apakah ada orang yang kamu percaya untuk bercerita?",
+                    "Pernahkah kamu merasa kurang semangat untuk datang ke sekolah? Menurutmu, apa penyebabnya dan bagaimana kamu ingin memperbaikinya?",
+                    "Jika kamu boleh meminta bantuan atau dukungan dari guru wali, hal apa yang paling ingin kamu bicarakan atau kamu butuhkan sekarang?"
+                ];
+                
+                window.allAnswers.socialEmotional.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${socialEmotionalQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.hopesReflection && window.allAnswers.hopesReflection.length > 0) {
+                emailBody += `
+🌈 HARAPAN & REFLEKSI DIRI:
+`;
+                const hopesReflectionQuestions = [
+                    "Bagaimana perasaanmu tentang dirimu sendiri minggu/bulan ini? Apa yang paling kamu syukuri?",
+                    "Hal apa yang menurutmu berjalan dengan baik akhir-akhir ini (baik di sekolah maupun di rumah)?",
+                    "Apakah ada hal yang belum sesuai harapanmu? Ceritakan apa yang membuatmu merasa begitu.",
+                    "Apa hal kecil yang ingin kamu perbaiki atau tingkatkan dalam waktu dekat (misalnya kebiasaan belajar, sikap, atau hubungan dengan teman)?",
+                    "Apa harapanmu untuk minggu/bulan berikutnya agar kamu bisa merasa lebih baik dan berkembang?"
+                ];
+                
+                window.allAnswers.hopesReflection.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${hopesReflectionQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            const additionalMessage = document.getElementById('additionalMessage').value.trim();
+            if (additionalMessage) {
+                emailBody += `
+💌 PESAN TAMBAHAN:
+"${additionalMessage}"
+`;
+            }
+
+            emailBody += `
+
+=== AKHIR REFLEKSI ===
+
+Refleksi ini dibuat melalui aplikasi KeKiCak (Kepedulian Kijang Cakap) - UPTD SMP Negeri 6 Pelaihari.
+
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.`;
+
+            return emailBody;
+        }
+        
+        function showCopySuccess(teacherEmail) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-md mx-4 text-center shadow-2xl">
+                    <div class="text-5xl mb-4">✅</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Email Berhasil Disalin!</h3>
+                    <p class="text-sm text-gray-700 mb-4">
+                        Isi email sudah disalin ke clipboard. Sekarang:
+                    </p>
+                    <div class="bg-blue-100 rounded-lg p-3 mb-4 text-left">
+                        <p class="text-blue-800 text-xs">
+                            1. Buka aplikasi email (Gmail, Yahoo, dll)<br>
+                            2. Buat email baru<br>
+                            3. Tempel (paste) isi email<br>
+                            4. Kirim ke: <strong>${teacherEmail}</strong>
+                        </p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                        Mengerti! 👍
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function showManualCopy(emailContent, teacherEmail) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-4 max-w-lg mx-auto text-center shadow-2xl max-h-full overflow-y-auto">
+                    <div class="text-4xl mb-3">📋</div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-3">Salin Email Ini</h3>
+                    <p class="text-xs text-gray-700 mb-3">
+                        Salin teks di bawah ini dan kirim melalui aplikasi email:
+                    </p>
+                    <textarea readonly class="w-full h-40 p-3 border-2 border-gray-300 rounded-lg text-xs bg-gray-50 mb-4" onclick="this.select()">${emailContent}</textarea>
+                    <div class="bg-yellow-100 rounded-lg p-3 mb-4">
+                        <p class="text-yellow-800 text-xs">
+                            💡 <strong>Cara:</strong> Tekan dan tahan teks di atas, pilih "Salin", lalu buka aplikasi email dan tempel.
+                        </p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-4 py-2 rounded-full transition-all duration-300 text-sm">
+                        Selesai
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function openGmailCompose(teacherEmail) {
+            let emailSubject = `Refleksi Siswa - ${window.studentName} (${document.getElementById('studentClass').value.trim()}) - KeKiCak`;
+            let emailBody = `Assalamu'alaikum Warahmatullahi Wabarakatuh,
+
+Berikut adalah refleksi dari siswa:
+
+Nama: ${window.studentName}
+Kelas: ${document.getElementById('studentClass').value.trim()}
+Tanggal: ${new Date().toLocaleDateString('id-ID', { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+})}
+
+=== REFLEKSI BERSAMA KIJAK ===
+
+`;
+
+            if (window.allAnswers.initial && window.allAnswers.initial.length > 0) {
+                emailBody += `
+💭 CERITA AWAL BERSAMA KIJAK:
+`;
+                const initialQuestions = [
+                    `Hai ${window.studentName}, bagaimana kabarmu hari ini?`,
+                    "Apa hal kecil yang membuatmu tersenyum hari ini?",
+                    "Kalau kamu menggambarkan harimu dengan satu kata, kata apa itu?",
+                    "Kamu sedang semangat, lelah, atau biasa saja hari ini?",
+                    "Siapa orang yang paling membuatmu merasa didukung belakangan ini?"
+                ];
+                
+                window.allAnswers.initial.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${initialQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.academic && window.allAnswers.academic.length > 0) {
+                emailBody += `
+📚 REFLEKSI AKADEMIK:
+`;
+                const academicQuestions = [
+                    "Apa mata pelajaran yang paling kamu sukai? Mengapa kamu merasa nyaman atau tertarik dengan pelajaran itu?",
+                    "Mata pelajaran mana yang menurutmu paling menantang? Apa yang bisa kamu lakukan agar lebih mudah memahaminya?",
+                    "Bagaimana cara kamu belajar di rumah? Apakah menurutmu cara itu sudah efektif?",
+                    "Ceritakan satu keberhasilan dalam belajar yang membuatmu bangga pada semester ini.",
+                    "Jika diberi kesempatan memperbaiki hasil belajar, hal apa yang ingin kamu ubah dari cara belajarmu?"
+                ];
+                
+                window.allAnswers.academic.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${academicQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.socialEmotional && window.allAnswers.socialEmotional.length > 0) {
+                emailBody += `
+🤝 PENGEMBANGAN DIRI (SOSIAL-EMOSIONAL):
+`;
+                const socialEmotionalQuestions = [
+                    "Dalam beberapa minggu terakhir, hal apa yang paling sering membuatmu merasa senang di sekolah? Bagaimana perasaanmu saat itu?",
+                    "Apakah ada hal yang membuatmu merasa sedih, cemas, atau tidak nyaman di sekolah? Ceritakan, apa yang terjadi dan bagaimana kamu mengatasinya.",
+                    "Ketika kamu mengalami masalah (misalnya dengan teman, pelajaran, atau di rumah), apa yang biasanya kamu lakukan? Apakah ada orang yang kamu percaya untuk bercerita?",
+                    "Pernahkah kamu merasa kurang semangat untuk datang ke sekolah? Menurutmu, apa penyebabnya dan bagaimana kamu ingin memperbaikinya?",
+                    "Jika kamu boleh meminta bantuan atau dukungan dari guru wali, hal apa yang paling ingin kamu bicarakan atau kamu butuhkan sekarang?"
+                ];
+                
+                window.allAnswers.socialEmotional.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${socialEmotionalQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            if (window.allAnswers.hopesReflection && window.allAnswers.hopesReflection.length > 0) {
+                emailBody += `
+🌈 HARAPAN & REFLEKSI DIRI:
+`;
+                const hopesReflectionQuestions = [
+                    "Bagaimana perasaanmu tentang dirimu sendiri minggu/bulan ini? Apa yang paling kamu syukuri?",
+                    "Hal apa yang menurutmu berjalan dengan baik akhir-akhir ini (baik di sekolah maupun di rumah)?",
+                    "Apakah ada hal yang belum sesuai harapanmu? Ceritakan apa yang membuatmu merasa begitu.",
+                    "Apa hal kecil yang ingin kamu perbaiki atau tingkatkan dalam waktu dekat (misalnya kebiasaan belajar, sikap, atau hubungan dengan teman)?",
+                    "Apa harapanmu untuk minggu/bulan berikutnya agar kamu bisa merasa lebih baik dan berkembang?"
+                ];
+                
+                window.allAnswers.hopesReflection.forEach((answer, index) => {
+                    if (answer && answer.trim()) {
+                        emailBody += `
+${index + 1}. ${hopesReflectionQuestions[index]}
+   Jawaban: "${answer}"
+`;
+                    }
+                });
+            }
+
+            const additionalMessage = document.getElementById('additionalMessage').value.trim();
+            if (additionalMessage) {
+                emailBody += `
+💌 PESAN TAMBAHAN:
+"${additionalMessage}"
+`;
+            }
+
+            emailBody += `
+
+=== AKHIR REFLEKSI ===
+
+Refleksi ini dibuat melalui aplikasi KeKiCak (Kepedulian Kijang Cakap) - UPTD SMP Negeri 6 Pelaihari.
+
+Wassalamu'alaikum Warahmatullahi Wabarakatuh.`;
+
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(teacherEmail)}&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+            window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+        }
+        
+        function showEmailSuccess() {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
+                    <div class="text-6xl mb-4">✅</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Email Siap Dikirim!</h3>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Terima kasih ${window.studentName}! Tab email sudah terbuka dengan refleksimu. Jangan lupa klik "Kirim" di aplikasi emailnya ya! 🌟
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                        Selesai! 🎉
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function showCustomMessage(message) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center shadow-2xl">
+                    <p class="text-xl text-gray-800 mb-6">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300">
+                        Oke! 👍
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+        
+        function showClosingPage() {
+            document.getElementById('summaryPage').classList.add('hidden');
+            document.getElementById('closingPage').classList.remove('hidden');
+            setTimeout(() => {
+                initializeClosingDialog();
+            }, 500);
+        }
+        
+        function initializeClosingDialog() {
+            const closingDialogs = [
+                "Hm... terima kasih ya, sudah bercerita dengan Kijak hari ini. 🌿 Setiap kata yang kamu tulis, setiap perasaan yang kamu bagikan, itu sangat berarti. Cerita kamu akan Kijak sampaikan dengan aman kepada Guru Walimu, supaya mereka bisa lebih mengenal dan mendukungmu.",
+                "Jangan lupa, kamu nggak pernah sendiri. Ada banyak orang yang peduli — termasuk Kijak dan Guru Walimu. Teruslah tumbuh, belajar, dan berbuat baik, ya. Kalau suatu hari kamu ingin bercerita lagi, Kijak akan selalu di sini, menunggumu di Bumi Tuntung Pandang💚 "
+            ];
+            
+            let currentClosingDialog = 0;
+            
+            const closingText = document.getElementById('closingText');
+            const closingBubble = document.getElementById('closingBubble');
+            const closingContinueBtn = document.getElementById('closingContinueBtn');
+            const finalMessage = document.getElementById('finalMessage');
+            const finalStudentName = document.getElementById('finalStudentName');
+            
+            finalStudentName.textContent = window.studentName || 'Teman Kijak';
+            
+            function typeWriter(text, element, callback) {
+                element.textContent = '';
+                let i = 0;
+                const speed = 40;
+                
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        if (callback) callback();
+                    }
+                }
+                
+                type();
+            }
+            
+            function showNextClosingDialog() {
+                if (currentClosingDialog < closingDialogs.length - 1) {
+                    currentClosingDialog++;
+                    
+                    closingBubble.style.opacity = '0.5';
+                    closingBubble.style.transform = 'translateY(-10px)';
+                    
+                    let pauseTime = 300;
+                    if (currentClosingDialog === 1) {
+                        pauseTime = 1000;
+                    }
+                    
+                    setTimeout(() => {
+                        typeWriter(closingDialogs[currentClosingDialog], closingText, () => {
+                            closingBubble.style.opacity = '1';
+                            closingBubble.style.transform = 'translateY(0)';
+                            
+                            if (currentClosingDialog < closingDialogs.length - 1) {
+                                setTimeout(() => {
+                                    closingContinueBtn.classList.remove('hidden');
+                                }, 1000);
+                            } else {
+                                setTimeout(() => {
+                                    closingBubble.style.opacity = '0';
+                                    closingBubble.style.transform = 'translateY(-20px)';
+                                    setTimeout(() => {
+                                        closingBubble.classList.add('hidden');
+                                        finalMessage.classList.remove('hidden');
+                                    }, 500);
+                                }, 2000);
+                            }
+                        });
+                    }, pauseTime);
+                }
+            }
+            
+            function continueClosingDialog() {
+                closingContinueBtn.classList.add('hidden');
+                showNextClosingDialog();
+            }
+            
+            window.continueClosingDialog = continueClosingDialog;
+            
+            setTimeout(() => {
+                closingContinueBtn.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        function restartApplication() {
+            window.studentName = '';
+            window.allAnswers = {
+                initial: [],
+                academic: [],
+                socialEmotional: [],
+                hopesReflection: []
+            };
+            window.completedSections = new Set();
+            
+            document.getElementById('closingPage').classList.add('hidden');
+            document.getElementById('summaryPage').classList.add('hidden');
+            document.getElementById('reflectionSectionsPage').classList.add('hidden');
+            document.getElementById('storyQuestionsPage').classList.add('hidden');
+            document.getElementById('nameInputPage').classList.add('hidden');
+            document.getElementById('introPage').classList.add('hidden');
+            
+            document.getElementById('welcomePage').classList.remove('hidden');
+            
+            document.getElementById('studentName').value = '';
+            document.getElementById('teacherEmail').value = '';
+            document.getElementById('studentClass').value = '';
+            document.getElementById('additionalMessage').value = '';
+        }
+        
+        document.getElementById('startBtn').addEventListener('click', function() {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                    showIntroductionPage();
+                }, 150);
+            }, 150);
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            const sparkles = document.querySelectorAll('.sparkle');
+            sparkles.forEach((sparkle, index) => {
+                if (Math.random() > 0.98) {
+                    sparkle.style.left = e.clientX + (Math.random() - 0.5) * 100 + 'px';
+                    sparkle.style.top = e.clientY + (Math.random() - 0.5) * 100 + 'px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
