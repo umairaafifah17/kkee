@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kijak - Teman Cerita dari Tanah Laut</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #6b8e23 100%);
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .forest-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(180deg, 
+                rgba(135, 206, 250, 0.3) 0%,
+                rgba(144, 238, 144, 0.2) 30%,
+                rgba(34, 139, 34, 0.4) 70%,
+                rgba(0, 100, 0, 0.6) 100%);
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://drive.google.com/uc?export=view&id=1_g2SmAZdqb-F1uAonKASMc6GFwtO1RjJ');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        .sunlight-rays {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 70%);
+            animation: sunlightMove 8s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes sunlightMove {
+            0%, 100% { transform: translateX(-100px) rotate(45deg); }
+            50% { transform: translateX(100px) rotate(45deg); }
+        }
+
+        .floating-leaves {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(34, 139, 34, 0.6);
+            border-radius: 0 100% 0 100%;
+            animation: float 12s linear infinite;
+        }
+
+        .leaf:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .leaf:nth-child(2) { left: 20%; animation-delay: 2s; }
+        .leaf:nth-child(3) { left: 30%; animation-delay: 4s; }
+        .leaf:nth-child(4) { left: 40%; animation-delay: 6s; }
+        .leaf:nth-child(5) { left: 50%; animation-delay: 8s; }
+        .leaf:nth-child(6) { left: 60%; animation-delay: 10s; }
+        .leaf:nth-child(7) { left: 70%; animation-delay: 1s; }
+        .leaf:nth-child(8) { left: 80%; animation-delay: 3s; }
+        .leaf:nth-child(9) { left: 90%; animation-delay: 5s; }
+
+        @keyframes float {
+            0% { 
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .kijak-container {
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .kijak-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 30px rgba(255, 165, 0, 0.4);
+            animation: gentleFloat 3s ease-in-out infinite;
+            object-fit: cover;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .conversation-bubble {
+            position: absolute;
+            bottom: 160px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            z-index: 15;
+            opacity: 0;
+            animation: bubbleAppear 0.6s ease-in-out forwards;
+            border: 2px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .conversation-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 15px solid rgba(255, 255, 255, 0.95);
+        }
+
+        @keyframes bubbleAppear {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-50%) translateY(20px) scale(0.8); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(-50%) translateY(0) scale(1); 
+            }
+        }
+
+        .bubble-text {
+            font-size: 16px;
+            color: #2d5016;
+            line-height: 1.5;
+            margin: 0;
+            text-align: center;
+        }
+
+        .dialogue-container {
+            position: absolute;
+            bottom: 20%;
+            right: 5%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            z-index: 15;
+            opacity: 0;
+            animation: slideInRight 0.8s ease-in-out 18s forwards;
+        }
+
+        @keyframes slideInRight {
+            0% { 
+                opacity: 0; 
+                transform: translateX(50px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        .dialogue-text {
+            font-size: 18px;
+            color: #2d5016;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeInText 0.8s ease-in-out forwards;
+        }
+
+        .dialogue-text:nth-child(1) { animation-delay: 1s; }
+        .dialogue-text:nth-child(2) { animation-delay: 3s; }
+        .dialogue-text:nth-child(3) { animation-delay: 5s; }
+        .dialogue-text:nth-child(4) { animation-delay: 7s; }
+        .dialogue-text:nth-child(5) { animation-delay: 9s; }
+        .dialogue-text:nth-child(6) { animation-delay: 12s; }
+        .dialogue-text:nth-child(7) { animation-delay: 14s; }
+
+        @keyframes fadeInText {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .start-button {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInButton 1s ease-in-out 16s forwards;
+            z-index: 20;
+        }
+
+        .start-button:hover {
+            transform: translateX(-50%) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.6);
+            background: linear-gradient(45deg, #45a049, #4CAF50);
+        }
+
+        @keyframes fadeInButton {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .ambient-sound {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .kijak-container {
+                left: 2%;
+                bottom: 5%;
+            }
+            
+            .kijak-avatar {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .conversation-bubble {
+                max-width: 250px;
+                bottom: 130px;
+                padding: 12px 16px;
+            }
+            
+            .bubble-text {
+                font-size: 14px;
+            }
+            
+            .dialogue-container {
+                max-width: 90%;
+                padding: 15px 20px;
+                right: 2%;
+                bottom: 15%;
+            }
+            
+            .dialogue-text {
+                font-size: 16px;
+            }
+            
+            .start-button {
+                bottom: 3%;
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="forest-container">
+        <div class="background-image"></div>
+        <div class="sunlight-rays"></div>
+        
+        <div class="floating-leaves">
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+            <div class="leaf"></div>
+        </div>
+
+        <div class="kijak-container">
+            <img src="https://drive.google.com/uc?export=view&id=1aPcotsdneeA9bnD_zWynQqybAmRN7HgG" 
+                 alt="Kijak Avatar" class="kijak-avatar">
+            
+            <!-- Conversation Bubbles -->
+            <div class="conversation-bubble" style="animation-delay: 1s;">
+                <p class="bubble-text">"Haii... assalamu'alaikum, teman baru Kijak! 🌿"</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 3s;">
+                <p class="bubble-text">"Senangnya bisa berjumpa denganmu di sini."</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 5s;">
+                <p class="bubble-text">"Namaku Kijak — singkatan dari Kijang Cakap! 🦌"</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 7s;">
+                <p class="bubble-text">"Aku berasal dari hutan Tanah Laut yang sejuk dan indah."</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 9s;">
+                <p class="bubble-text">"Kata orang, aku suka berkelana dan mendengar cerita siapa saja, terutama anak-anak hebat seperti kamu!"</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 12s;">
+                <p class="bubble-text">"Di sini, kamu bisa bercerita tentang apapun — suka, duka, atau pengalamanmu hari ini."</p>
+            </div>
+            
+            <div class="conversation-bubble" style="animation-delay: 14s;">
+                <p class="bubble-text">"Tenang aja, Kijak selalu siap mendengar dengan penuh kepedulian." 💚</p>
+            </div>
+        </div>
+
+        <div class="dialogue-container">
+            <div class="dialogue-text">"Selamat datang di dunia cerita Kijak!"</div>
+            <div class="dialogue-text">"Klik tombol di bawah untuk memulai petualangan cerita bersama Kijak."</div>
+        </div>
+
+        <button class="start-button" onclick="startStory()">Mulai Ceritaku 🌱</button>
+    </div>
+
+    <script>
+        function startStory() {
+            alert('Selamat datang di dunia cerita Kijak! 🌿');
+            // Add your story functionality here
+        }
+
+        // Add ambient forest sounds
+        function playAmbientSound() {
+            // This would typically play background forest sounds
+            // For now, we'll just add a subtle visual effect
+            console.log('Forest ambiance activated');
+        }
+
+        // Initialize the scene
+        document.addEventListener('DOMContentLoaded', function() {
+            playAmbientSound();
+        });
+    </script>
+</body>
+</html>
